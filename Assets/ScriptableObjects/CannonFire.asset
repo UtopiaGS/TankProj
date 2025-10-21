@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0093996708062d04298cb0511ba46750, type: 3}
+  m_Name: CannonFire
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 8300000, guid: 6b62efa7d151ce247897e7298db16c14, type: 3}
+  - {fileID: 8300000, guid: 94c768c85d7a97649a6dadd6f65a40d3, type: 3}
+  - {fileID: 8300000, guid: a0f826a878b751e438f0d36953d4016c, type: 3}
