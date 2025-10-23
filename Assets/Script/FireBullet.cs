@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(AudioSource))]
 public class FireBullet : MonoBehaviour
 {
     public InputActionReference fire;

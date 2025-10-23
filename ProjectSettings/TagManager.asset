@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Target
   - Bullet
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
   - HitBullet
+  - Ground
   - 
   - 
   - 
