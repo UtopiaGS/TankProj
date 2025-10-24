@@ -3,28 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-	private const string GROUND_TAG = "Ground";
-	public float speed;
-	Rigidbody _rb;
+    public float speed;
+    private Rigidbody rb;
 
 	private void Awake()
 	{
-		_rb = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
 		Destroy(gameObject, 5f);
 	}
-	void LateUpdate()
+
+
+	void FixedUpdate()
     {
-		Vector3 moveDirection = transform.forward * speed;
-		_rb.MovePosition(_rb.position + moveDirection * Time.deltaTime);
-
-	}
-	
-
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.CompareTag(GROUND_TAG))
-		{
-			Destroy(gameObject, 0.5f);
-		}
+		Vector3 moveDir = transform.forward * speed;
+		rb.MovePosition(rb.position + moveDir * Time.fixedDeltaTime);
 	}
 }

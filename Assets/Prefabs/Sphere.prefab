@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7428329856231230181}
   - component: {fileID: 8017932709973934590}
   - component: {fileID: 1840033808146561168}
-  - component: {fileID: 3895424211596694988}
-  m_Layer: 6
+  - component: {fileID: 4830473876674630858}
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177f241ca6d378c4f9474bb5473a5c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
---- !u!54 &3895424211596694988
+  speed: 25
+--- !u!54 &4830473876674630858
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +139,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -149,4 +149,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3

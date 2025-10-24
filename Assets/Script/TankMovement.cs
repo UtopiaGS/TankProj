@@ -1,70 +1,67 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class TankMovement : MonoBehaviour
 {
     public InputActionReference move;
     public InputActionReference rotate;
-    public InputActionReference rotateTop;
 
     public GameObject top;
     public float moveSpeed;
     public float rotateSpeed;
     public float rotateTopSpeed;
-
-    public float uprightCorrectionSpeed = 5f;
-    public Rigidbody rb;
+	public Rigidbody rb;
+	public float uprightCorrectionSpeed = 5f;
 
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 	}
-
 	void FixedUpdate()
     {
         var _rotateAction = rotate.action.ReadValue<float>();
         var _moveAction = move.action.ReadValue<float>();
 
-        Vector3 moveDirection = transform.forward * _moveAction * moveSpeed;
-        rb.MovePosition(rb.position + moveDirection * Time.fixedDeltaTime);
+		Vector3 moveDirection = transform.forward * _moveAction * moveSpeed;
+		rb.MovePosition(rb.position + moveDirection * Time.fixedDeltaTime);
 
-        Quaternion rotation = Quaternion.Euler(0, _rotateAction * rotateSpeed * Time.fixedDeltaTime, 0);
-        rb.MoveRotation(rb.rotation * rotation);
-        CorrectPosition();
-        RotateTop();
+
+		Quaternion rotation = Quaternion.Euler(0, _rotateAction * rotateSpeed *Time.deltaTime, 0);
+		rb.MoveRotation(rb.rotation * rotation);		
+		CorrectPosition();
+		RotateTop();
 
 	}
-
 	void CorrectPosition()
 	{
-		Quaternion targetRotation = Quaternion.Euler(0, rb.rotation.eulerAngles.y, 0);
-        rb.rotation = Quaternion.Lerp(rb.rotation, targetRotation, uprightCorrectionSpeed * Time.fixedDeltaTime);
+		Vector3 uprightDirection = Vector3.up;
+		Vector3 tankUpDirection = transform.up;
+
+		Quaternion correctionRotation = Quaternion.FromToRotation(tankUpDirection, uprightDirection) * rb.rotation;
+		rb.rotation = Quaternion.Lerp(rb.rotation, correctionRotation, uprightCorrectionSpeed * Time.fixedDeltaTime);
 	}
 
-    void RotateTop() {
-        Vector3 mousePosition = Input.mousePosition;
+	private void RotateTop() {
+		Vector3 mousePosition = Input.mousePosition;
+
 		Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) {
+			Vector3 targetPosition = hit.point;
 
-        if(Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity))
-		{
-			Vector3 targetPosition = hitInfo.point;
+			Vector3 direction = targetPosition - top.transform.position;
 
-			Vector3 directionToTarget = targetPosition - top.transform.position;
+			direction.y = 0;
 
-            directionToTarget.y = 0;
+			if (direction.magnitude > 0.02f) {
+				Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            if (directionToTarget.magnitude > 0.01f) {
-				Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-                Quaternion bodyRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+				Quaternion bodyRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
 				Quaternion finalRotation = bodyRotation * Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
-                top.transform.rotation = Quaternion.Lerp(top.transform.rotation, finalRotation, rotateTopSpeed * Time.fixedDeltaTime);
+				top.transform.rotation = Quaternion.Lerp(top.transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime);
 			}
 		}
-
 	}
 }
