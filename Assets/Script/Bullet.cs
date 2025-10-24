@@ -1,12 +1,21 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
     public float speed;
-  
+    private Rigidbody rb;
 
-    void LateUpdate()
+	private void Awake()
+	{
+		rb = GetComponent<Rigidbody>();
+		Destroy(gameObject, 5f);
+	}
+
+
+	void FixedUpdate()
     {
-		transform.position += transform.forward * speed * Time.deltaTime;
+		Vector3 moveDir = transform.forward * speed;
+		rb.MovePosition(rb.position + moveDir * Time.fixedDeltaTime);
 	}
 }
