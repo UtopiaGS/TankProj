@@ -25,7 +25,6 @@ public class TargetSpawner : MonoBehaviour
     private IEnumerator SpawnElementsRoutine(float waitTime) {
 
         yield return new WaitForSeconds(waitTime);
-        Debug.Log($"Waited {waitTime} seconds");
         for (int i = 0; i < _positions.Length; i++)
         {
             if (_occupiedPositions.Contains(_positions[i]))

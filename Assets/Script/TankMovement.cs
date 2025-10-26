@@ -17,6 +17,8 @@ public class TankMovement : MonoBehaviour
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+		ScoreManager.IntializeBestScore();
+		Debug.Log($"Initialize Score: {ScoreManager.BestScore}");
 	}
 	void FixedUpdate()
     {
